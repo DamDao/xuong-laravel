@@ -83,7 +83,7 @@
                                         : '<span class="badge bg-danger">No</span>' !!}</td>
                                     <td>
                                         @foreach ($item->tags as $tag)
-                                        <span class="badge bg-info">{{$tag->name}}</span>
+                                            <span class="badge bg-info">{{ $tag->name }}</span>
                                         @endforeach
                                     </td>
 
@@ -94,8 +94,13 @@
                                             class="btn btn-primary mb-3">xem</a>
                                         <a href="{{ route('admin.products.edit', $item->id) }}"
                                             class="btn btn-warning mb-3">sửa</a>
-                                        <a href="{{ route('admin.products.destroy', $item->id) }}"
-                                            onclick="return confirm('Are you sure?')" class="btn btn-danger mb-3">xóa</a>
+                                        <form action="{{route('admin.products.destroy', $item->id)}}" method="post">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" onclick="return confirm('Are you sure?')"
+                                                class="btn btn-danger mb-3">xóa</button>
+
+                                        </form>
 
                                     </td>
                                 </tr>

@@ -157,7 +157,7 @@ class ProductController extends Controller
         $dataProductGalleries = $request->product_galleries ?: [];
 
         try {
-          
+
             DB::beginTransaction();
 
             $product = Product::create($dataProduct);
@@ -220,5 +220,20 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        try {
+            DB::transaction(function ()  use ($product) {
+                $product->tags()->sync([]);
+
+                $product->galleries()->delete();
+
+                $product->variants()->delete();
+
+                $product->delete();
+            }, 3);
+
+            return back();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }
