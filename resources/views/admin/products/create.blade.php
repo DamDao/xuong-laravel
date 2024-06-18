@@ -24,14 +24,14 @@
         @csrf
         @method('POST')
         @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -86,41 +86,27 @@
 
                                 <div class="col-md-8">
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-check form-switch form-switch-primary">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    name="is_active" id="is_active" checked>
-                                                <label class="form-check-label" for="is_active">Is Active</label>
+                                        @php
+                                            $is = [
+                                                'is_active' => 'primary',
+                                                'is_hot_deal' => 'warning',
+                                                'is_good_deal' => 'success',
+                                                'is_new' => 'danger',
+                                                'is_show_home' => 'info',
+                                            ];
+                                        @endphp
+                                        @foreach ($is as $key => $color)
+                                            <div class="col-md-2">
+                                                <div class="form-check form-switch form-switch-{{ $color }}">
+                                                    <input class="form-check-input" type="checkbox" role="switch" value="1"
+                                                        name="{{ $key }}" id="{{ $key }}" checked>
+                                                    <label class="form-check-label" for="{{ $key }}">Is
+                                                        Active</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-check form-switch form-switch-warning">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    name="is_hot_deal" id="is_hot_deal" checked>
-                                                <label class="form-check-label" for="is_hot_deal">Is Hot Deal</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-check form-switch form-switch-success">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    name="is_good_deal" id="is_good_deal" checked>
-                                                <label class="form-check-label" for="is_good_deal">is Good Deal</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-check form-switch form-switch-danger">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    name="is_new" id="is_new" checked>
-                                                <label class="form-check-label" for="is_new">Is New</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-check form-switch form-switch-info">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    name="is_show_home" id="is_show_home" checked>
-                                                <label class="form-check-label" for="is_show_home">Is Show Home</label>
-                                            </div>
-                                        </div>
+                                        @endforeach
+
+
                                     </div>
                                     <div class="row">
                                         <!-- Example Textarea -->
@@ -218,13 +204,15 @@
                                 <div class="col-md-4">
                                     <div>
                                         <label for="name" class="form-label">Gallery 1</label>
-                                        <input type="file" class="form-control" name="product_galleries[]" id="gallery_1">
+                                        <input type="file" class="form-control" name="product_galleries[]"
+                                            id="gallery_1">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div>
                                         <label for="name" class="form-label">Gallery 2</label>
-                                        <input type="file" class="form-control" name="product_galleries[]" id="gallery_2">
+                                        <input type="file" class="form-control" name="product_galleries[]"
+                                            id="gallery_2">
                                     </div>
                                 </div>
 
@@ -250,9 +238,8 @@
                                     <div>
                                         <label for="name" class="form-label">Tag</label>
                                         <select class="form-control" name="tags[]" id="tags" multiple>
-                                            @foreach ($tags as $key=>$value)
-                                            <option value="{{$key}}">{{$value}}</option> 
-                                                
+                                            @foreach ($tags as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
