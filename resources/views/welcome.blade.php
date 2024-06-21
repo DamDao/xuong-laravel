@@ -838,6 +838,7 @@
 <body class="antialiased">
     <div
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+       
         @if (Route::has('login'))
             <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                 @auth
@@ -868,17 +869,22 @@
 
             <div class="mt-16">
 
-
                 <div class="row">
                     @foreach ($products as $item)
                         <div class="col-md-3">
                             <div class="card">
-                                <img class="card-img-top" src="{{ $item->img_thumbnail }}" alt="Card image">
+                                @php
+                                    $url = $item->img_thumbnail;
+                                    if (!Str::contains($url, 'http')) {
+                                        $url = Storage::url($url);
+                                    }
+                                @endphp
+                                <img class="card-img-top" src="{{ $url }}" alt="Card image">
                                 <div class="card-body">
                                     <h4 class="card-title">{{ Str::limit($item->name, 30) }}</h4>
                                     <p class="card-text">Some example text.</p>
-                                    <a href="{{ route('product.detail',$item->slug) }}"
-                                        class="btn btn-primary">Xem chi tiết</a>
+                                    <a href="{{ route('product.detail', $item->slug) }}" class="btn btn-primary">Xem chi
+                                        tiết</a>
                                 </div>
                             </div>
                         </div>

@@ -18,8 +18,7 @@ return new class extends Migration
             $table->id();
             // user_id chỉ dùng để xác định ng nào mua trên hệ thông
             $table->foreignIdFor(User::class)->constrained();
-            // 
-            $table->foreignIdFor(ProductVariant::class)->constrained();
+     
 
             // lưu lại toàn bộ tt ng đặt
             $table->string('user_name');

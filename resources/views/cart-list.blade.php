@@ -32,17 +32,17 @@
                     </tr>
                     @if (session()->has('cart'))
                         @foreach (session('cart') as $item)
-                 @php
-                    //  dd($item);
-                 @endphp
+                            @php
+                                //  dd($item);
+                            @endphp
                             <tr>
                                 <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['price_regular'] }}</td>
                                 <td>{{ $item['price_sale'] }}</td>
                                 <td>{{ $item['product_color']['name'] }}</td>
-                                <td>{{ $item['product_size']['name']}}</td>
+                                <td>{{ $item['product_size']['name'] }}</td>
                                 <td>
-                                    {{ $item['quatity'] ??=0 }}
+                                    {{ $item['quatity'] ??= 0 }}
                                 </td>
                             </tr>
                         @endforeach
@@ -52,15 +52,33 @@
                 </table>
             </div>
             <div class="col-md-4">
-                {{-- <form action="{{ route('order.save') }}" method="post">
+                <h2>Tổng tiền: {{$totalAmount}}</h2>
+                <form action="{{ route('order.save') }}" method="post">
                     @csrf
-                    <label class="form-check-label mb-3 mt-3" for=""><b>Color</b></label>
+
+                    <div class="mt-3 mb2">
+                        <label for="user_name">{{ Str::convertCase('user_name', MB_CASE_TITLE) }}</label>
+                        <input type="text" name="user_name" id="user_name" value="{{ auth()->user()?->name }}">
+                    </div>
+
+                    <div class="mt-3 mb2">
+                        <label for="user_email">{{ Str::convertCase('user_email', MB_CASE_TITLE) }}</label>
+                        <input type="text" name="user_email" id="user_email" value="{{ auth()->user()?->email }}">
+                    </div>
+
+                    <div class="mt-3 mb2">
+                        <label for="user_phone">{{ Str::convertCase('user_phone', MB_CASE_TITLE) }}</label>
+                        <input type="text" name="user_phone" id="user_phone">
+                    </div>
+
+                    <div class="mt-3 mb2">
+                        <label for="user_address">{{ Str::convertCase('user_address', MB_CASE_TITLE) }}</label>
+                        <input type="text" name="user_address" id="user_address">
+                    </div>
 
 
-
-
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
-                </form> --}}
+                    <button class="btn btn-primary" type="submit">Order</button>
+                </form>
             </div>
         </div>
     </div>

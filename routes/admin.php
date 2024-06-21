@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Middleware\CheckAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 // use Illuminate\Routing\Route;
@@ -11,7 +12,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', function () {
             return view('admin.dashboard');
-        })->name('dashboard');
+        })->name('dashboard')->middleware('isAdmin');
         Route::prefix('catalogues')
             ->as('catalogues.')
             ->group(function () {
@@ -23,6 +24,5 @@ Route::prefix('admin')
                 Route::put('{id}/update', [CatalogueController::class, 'update'])->name('update');
                 Route::get('{id}/destroy', [CatalogueController::class, 'destroy'])->name('destroy');
             });
-
             Route::resource('products', ProductController::class);
     });

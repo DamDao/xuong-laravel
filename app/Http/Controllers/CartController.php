@@ -13,8 +13,13 @@ class CartController extends Controller
     public function list()
     {
         // dd(session('cart'));
-        
-        return view('cart-list');
+        $cart = session('cart');
+        $totalAmount = 0;
+        foreach ($cart as $item) {
+            $totalAmount += $item['quatity'] * ($item['price_sale'] ?: $item['price_regular']);
+        }
+
+        return view('cart-list',compact('totalAmount'));
     }
 
     public function add()
@@ -39,7 +44,7 @@ class CartController extends Controller
                 + $productVariant->toArray()
                 + ['quatity' => request('quatity')]; // mare 2 mảng bằng ... or ++
             // dd(    $data['quatity']);
-            session()->put('cart.' . $productVariant->id, $data); 
+            session()->put('cart.' . $productVariant->id, $data);
         } else {
             $data = session('cart')[$productVariant->id];
             $data['quatity'] = request('quatity');
